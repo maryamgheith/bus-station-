@@ -98,7 +98,7 @@ public class ManagerGUI {
 		JButton btnSaveChanges = new JButton("Save changes");
 		btnSaveChanges.setBounds(443, 151, 114, 25);
 		frame.getContentPane().add(btnSaveChanges);
-		
+		JButton btnDone = new JButton("Done");
 		textField = new JTextField();
 		textField.setBounds(41, 310, 390, 22);
 		frame.getContentPane().add(textField);
@@ -113,10 +113,22 @@ public class ManagerGUI {
 			public void actionPerformed(ActionEvent e) {
 				btnAdd.setVisible(true);
 				textField.setVisible(true);
+				btnDone.setVisible(true);
 			}
 		});
 		btnAddNewTrip.setBounds(443, 194, 115, 25);
 		frame.getContentPane().add(btnAddNewTrip);
+		
+		
+		btnDone.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				btnAdd.setVisible(false);
+				textField.setVisible(false);
+				btnDone.setVisible(false);
+			}
+		});
+		btnDone.setBounds(443, 340, 97, 25);
+		frame.getContentPane().add(btnDone);
 		
 		
 	}
