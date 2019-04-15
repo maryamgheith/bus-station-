@@ -12,16 +12,17 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import java.awt.Insets;
-import java.awt.Toolkit;
+
 
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
+
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
+import java.awt.Font;
 
 public class LogIn extends JFrame {
 	
@@ -29,7 +30,7 @@ public class LogIn extends JFrame {
 	private JPasswordField passwordField;
 	private JTextField textField;
 	private ButtonGroup bg = new ButtonGroup();
-	ReadFile reader = new ReadFile();
+	FileMethods reader = new FileMethods();
 	/**
 	 * Launch the application.
 	 */
@@ -59,7 +60,7 @@ public class LogIn extends JFrame {
 		gridBagLayout.rowWeights = new double[]{Double.MIN_VALUE};
 		getContentPane().setLayout(gridBagLayout);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 557, 434);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -71,45 +72,49 @@ public class LogIn extends JFrame {
 		contentPane.setLayout(gbl_contentPane);
 		
 		JLabel lblUsername = new JLabel("Username:");
+		lblUsername.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		GridBagConstraints gbc_lblUsername = new GridBagConstraints();
+		gbc_lblUsername.gridwidth = 2;
 		gbc_lblUsername.insets = new Insets(0, 0, 5, 5);
 		gbc_lblUsername.anchor = GridBagConstraints.EAST;
-		gbc_lblUsername.gridx = 3;
+		gbc_lblUsername.gridx = 1;
 		gbc_lblUsername.gridy = 1;
 		contentPane.add(lblUsername, gbc_lblUsername);
 		
 		textField = new JTextField();
 		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.gridwidth = 6;
+		gbc_textField.gridwidth = 7;
 		gbc_textField.insets = new Insets(0, 0, 5, 5);
 		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField.gridx = 4;
+		gbc_textField.gridx = 3;
 		gbc_textField.gridy = 1;
 		contentPane.add(textField, gbc_textField);
 		textField.setColumns(10);
 		
 		JLabel lblPassword = new JLabel("Password:");
+		lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		GridBagConstraints gbc_lblPassword = new GridBagConstraints();
+		gbc_lblPassword.gridwidth = 2;
 		gbc_lblPassword.anchor = GridBagConstraints.EAST;
 		gbc_lblPassword.insets = new Insets(0, 0, 5, 5);
-		gbc_lblPassword.gridx = 3;
-		gbc_lblPassword.gridy = 2;
+		gbc_lblPassword.gridx = 1;
+		gbc_lblPassword.gridy = 3;
 		contentPane.add(lblPassword, gbc_lblPassword);
 		
 		passwordField = new JPasswordField();
 		GridBagConstraints gbc_passwordField = new GridBagConstraints();
-		gbc_passwordField.gridwidth = 6;
+		gbc_passwordField.gridwidth = 7;
 		gbc_passwordField.insets = new Insets(0, 0, 5, 5);
 		gbc_passwordField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_passwordField.gridx = 4;
-		gbc_passwordField.gridy = 2;
+		gbc_passwordField.gridx = 3;
+		gbc_passwordField.gridy = 3;
 		contentPane.add(passwordField, gbc_passwordField);
 		
 		Box horizontalBox = Box.createHorizontalBox();
 		GridBagConstraints gbc_horizontalBox = new GridBagConstraints();
-		gbc_horizontalBox.gridwidth = 8;
+		gbc_horizontalBox.gridwidth = 14;
 		gbc_horizontalBox.insets = new Insets(0, 0, 5, 5);
-		gbc_horizontalBox.gridx = 3;
+		gbc_horizontalBox.gridx = 0;
 		gbc_horizontalBox.gridy = 4;
 		contentPane.add(horizontalBox, gbc_horizontalBox);
 		
@@ -125,6 +130,7 @@ public class LogIn extends JFrame {
 		bg.add(rdbtnDriver);
 		bg.add(rdbtnPassenger);
 		JButton btnLogin = new JButton("Login");
+		btnLogin.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String username = textField.getText();
@@ -143,7 +149,7 @@ public class LogIn extends JFrame {
 				}
 				
 				else if (rdbtnDriver.isSelected()==true) {
-					Name=("drivers");
+					Name=("driver");
 					if (reader.validateUsername(username, password, Name)==true)
 					{
 		//				close();
@@ -176,8 +182,9 @@ public class LogIn extends JFrame {
 				}
 		});
 		GridBagConstraints gbc_btnLogin = new GridBagConstraints();
+		gbc_btnLogin.gridwidth = 6;
 		gbc_btnLogin.insets = new Insets(0, 0, 5, 5);
-		gbc_btnLogin.gridx = 10;
+		gbc_btnLogin.gridx = 6;
 		gbc_btnLogin.gridy = 5;
 		contentPane.add(btnLogin, gbc_btnLogin);
 	}

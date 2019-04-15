@@ -11,19 +11,22 @@ import javax.swing.JScrollPane;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import java.awt.Color;
 import javax.swing.JTextField;
+import java.awt.Choice;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 
-public class ManagerGUI {
+public class ManagerGUI extends JFrame{
 
 	private JFrame frame;
-	private ReadFile reader;
-	private JList tripsJList;
-	LogIn log = new LogIn();
+		LogIn log = new LogIn();
 	private JTextField textField;
+	FileMethods reader = new FileMethods();
 	/**
 	 * Launch the application.
 	 */
@@ -55,16 +58,23 @@ public class ManagerGUI {
 		frame.setBounds(100, 100, 595, 425);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		JComboBox<String> comboBox = new JComboBox<String>();
+		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Type", "Internal", "External"}));
+		comboBox.setBounds(227, 65, 179, 22);
+		frame.getContentPane().add(comboBox);
 		
-		JButton btnNewButton = new JButton("Show List Of Available Trips");
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(35, 117, 390, 180);
+		frame.getContentPane().add(scrollPane);
 		DefaultListModel<String> listModel = new DefaultListModel<>();
 		JList tripslist = new JList(listModel);
+		scrollPane.setViewportView(tripslist);
 		tripslist.setVisible(false);
-		tripslist.setBounds(41, 117, 390, 172);
-		frame.getContentPane().add(tripslist);
+		JButton btnNewButton = new JButton("Show List Of Available Trips");
+		
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ReadFile reader = new ReadFile();
+				
 				tripslist.setVisible(true);
 				ArrayList<String> trips = new ArrayList<String>();
 				trips = reader.Readfile("trips");
@@ -105,16 +115,35 @@ public class ManagerGUI {
 		textField.setColumns(10);
 		textField.setVisible(false);
 		JButton btnAdd = new JButton("Add");
+		btnAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				listModel.addElement(textField.getText());
+				try {
+					String i=(String) comboBox.getSelectedItem();
+					reader.writeToFile("trips", textField.getText());
+					reader.writeToFile(i,textField.getText());
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				textField.setText(null);
+				
+				
+				
+			}
+		});
+		comboBox.setVisible(false);	
 		btnAdd.setBounds(443, 309, 97, 25);
 		frame.getContentPane().add(btnAdd);
 		btnAdd.setVisible(false);
+		btnDone.setVisible(false);
 		JButton btnAddNewTrip = new JButton("Add New Trip");
 		btnAddNewTrip.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				btnAdd.setVisible(true);
 				textField.setVisible(true);
 				btnDone.setVisible(true);
-			}
+				comboBox.setVisible(true);			}
 		});
 		btnAddNewTrip.setBounds(443, 194, 115, 25);
 		frame.getContentPane().add(btnAddNewTrip);
@@ -129,6 +158,29 @@ public class ManagerGUI {
 		});
 		btnDone.setBounds(443, 340, 97, 25);
 		frame.getContentPane().add(btnDone);
+		
+		JComboBox comboBox_1 = new JComboBox();
+		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"drivers", "asmaa", "nemo", "ahmed"}));
+		comboBox_1.setBounds(429, 65, 128, 22);
+		frame.getContentPane().add(comboBox_1);
+		
+		JButton btnAssignToDriver = new JButton("Assign To Driver");
+		btnAssignToDriver.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String name =  (String) comboBox_1.getSelectedItem();
+				try {
+					reader.writeToFile(name,(String) tripslist.getSelectedValue());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		btnAssignToDriver.setBounds(436, 270, 129, 25);
+		frame.getContentPane().add(btnAssignToDriver);
+	
+		
+		
+		
 		
 		
 	}
